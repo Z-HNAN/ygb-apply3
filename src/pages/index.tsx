@@ -1,20 +1,16 @@
 import React from 'react';
-import { Button } from 'antd-mobile';
-import styles from './index.css';
+import CustomIcon from '@/components/Icon'
+import { Button, Icon, Grid } from 'antd-mobile';
+import styles from './index.less'
+
 
 export default function() {
   return (
-    <div className={styles.normal}>
-      <Button>Start</Button>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>To get started, edit <code>src/pages/index.js</code> and save to reload.</li>
-        <li>
-          <a href="https://umijs.org/guide/getting-started.html">
-            Getting Started
-          </a>
-        </li>
-      </ul>
+    <div>
+      <div className={styles.box}>
+        <h1>123456</h1>
+        <CustomIcon type='add' size='lg' className={styles['am-icon-add']}/>  
+      </div>
     </div>
-  );
+  )
 }
