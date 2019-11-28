@@ -14,6 +14,7 @@ const routes: IRoute[] = [
       { path: '/post', component: './post', title: '岗位' },
       { path: '/schedule', component: './schedule', title: '计划' },
       { path: '/me', component: './me', title: '我的' },
+      { path: '/users', component: './users', title: '用户' },
       { component: '404', title: '页面走丢了...' },
     ],
   }
