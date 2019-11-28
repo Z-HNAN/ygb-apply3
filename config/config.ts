@@ -17,15 +17,15 @@ const config: IConfig =  {
 
   /* babel插件配置 */
   extraBabelPlugins: [
-    [
-      // 配置按需加载 antd-mobile 样式加载插件
-      require.resolve('babel-plugin-import'),
-      {
-        libraryName: 'antd-mobile',
-        libraryDirectory: 'es',
-        style: true
-      },
-    ]
+    // 此处定制了主题，采用了全局样式引入,不需要修改主题，可将此处放开，并删除global中的全局引入
+    // [
+    //   // 配置按需加载 antd-mobile 样式加载插件
+    //   require.resolve('babel-plugin-import'),
+    //   {
+    //     libraryName: 'antd-mobile',
+    //     style: true
+    //   },
+    // ]
   ],
 
   /* 排除svg */
