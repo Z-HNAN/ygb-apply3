@@ -3,7 +3,8 @@ import React from 'react'
 /**
  * 自定义Icon
  */
-export type IconType = 'add'
+export type IconType = string
+  | 'add'
   | 'minus'
 
 export interface IconProps {

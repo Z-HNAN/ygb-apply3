@@ -2,12 +2,20 @@ import { IRoute } from 'umi-types'
 
 /* 项目路由配置 (采用配置式路由) */
 const routes: IRoute[] = [
+  // 默认跳转去post页面 
   {
     path: '/',
-    component: '../layouts/index',
+    redirect: '/post',
+  },
+  {
+    path: '/',
+    component: '../layouts/BasicLayout',
     routes: [
-      { path: '/', component: '../pages/index' }
-    ]
+      { path: '/post', component: './post', title: '岗位' },
+      { path: '/schedule', component: './schedule', title: '计划' },
+      { path: '/me', component: './me', title: '我的' },
+      { component: '404', title: '页面走丢了...' },
+    ],
   }
 ]
 
