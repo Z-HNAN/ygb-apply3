@@ -3,46 +3,61 @@
  */
 
 import React from 'react'
-import { Button } from 'antd-mobile'
+import { StickyContainer, Sticky } from 'react-sticky'
 import { connect } from 'dva';
+import {
+  Button,
+  Tabs,
+} from 'antd-mobile'
 
+import { IConnectState } from '@/models/connect.d'
 import { Dispatch, AnyAction } from 'redux';
+
+import styles from './index.less'
 
 
 interface IProps {
   dispatch: Dispatch<AnyAction>
-  count: number
 }
 
+
+const tabs = [
+  { title: '普通岗位', key: 'normal' },
+  { title: '公寓中心', key: 'department' },
+]
+
 const Post: React.FC<IProps> = props => {
-  const { dispatch, count } = props
+  const { dispatch } = props
 
-  function addHandler() {
-    dispatch({ type: 'post/add' })
-  }
-
-  function addAsyncHandler() {
-    dispatch({
-      type: 'post/addAsync',
-      payload: { delay: 3000 },
-    })
+  function renderTabBar(props: any) {
+    return (
+      <Sticky>
+        {({ style }) => <div style={{...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
+      </Sticky>
+    )
   }
 
   return (
     <div>
-      <h1>count: {count}</h1>
-      <Button type='primary' onClick={addHandler}>add</Button>
-      <Button type='primary' onClick={addAsyncHandler}>add-async</Button>
+      <StickyContainer>
+        <Tabs
+          tabs={tabs}
+          renderTabBar={renderTabBar}
+        >
+          <div className={styles.tabsContainer} key='normal'>
+            Content of first tab
+          </div>
+          <div className={styles.tabsContainer} key='department'>
+            Content of second tab
+          </div>
+        </Tabs>
+      </StickyContainer>
     </div>
   )
 }
 
-const mapStateToProps = state => {
-  const {count} = state.post
-
-  return {
-    count
-  }
+const mapStateToProps = (state: IConnectState) => {
+  return {}
 }
 
 export default connect(mapStateToProps)(Post)
