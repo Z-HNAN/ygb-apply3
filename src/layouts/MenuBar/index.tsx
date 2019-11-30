@@ -23,20 +23,20 @@ export interface ITabBar {
 const tabBarData: ITabBar[] = [
   {
     title: '岗位',
-    icon: 'add',
-    selectedIcon: 'add',
+    icon: 'container',
+    selectedIcon: 'container',
     link: '/post',
   },
   {
     title: '计划',
-    icon: 'add',
-    selectedIcon: 'add',
+    icon: 'calendar',
+    selectedIcon: 'calendar',
     link: '/schedule',
   },
   {
     title: '我的',
-    icon: 'add',
-    selectedIcon: 'add',
+    icon: 'user',
+    selectedIcon: 'user',
     link: '/me',
   },
 ]
