@@ -14,6 +14,8 @@ import { IConnectState } from '@/models/connect.d'
 import { Dispatch, AnyAction } from 'redux';
 
 import DeparmentComponent from './components/Department'
+import NormalComponent from './components/Normal'
+
 
 import styles from './index.less'
 
@@ -47,7 +49,7 @@ const Post: React.FC<IProps> = props => {
           renderTabBar={renderTabBar}
         >
           <div className={styles.tabsContainer} key='normal'>
-            Content of first tab
+            <NormalComponent />
           </div>
           <div className={styles.tabsContainer} key='department'>
             <DeparmentComponent />
