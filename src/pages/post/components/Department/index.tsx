@@ -13,3 +13,6 @@ const Department: React.FC<IProps> = props => {
 
   return <div>department</div>
 }
+
+
+export default Department
