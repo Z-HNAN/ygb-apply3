@@ -1,11 +1,13 @@
 import { AnyAction } from 'redux';
 
 import { IUsersModelState } from './users'
+import { IPostModelState } from './post'
 
-export { IUsersModelState }
+export { IUsersModelState, IPostModelState }
 
 export interface IConnectState {
   users: IUsersModelState
+  post: IPostModelState
 }
 
 // export interface Route  {

@@ -1,17 +1,31 @@
 import React from 'react'
 
-import { connect } from 'dva'
+import { INormalPost } from '@/models/post'
 
-import { Dispatch, AnyAction } from 'redux'
+import {
+  Card,
+  WhiteSpace,
+} from 'antd-mobile'
 
 interface IProps {
-
+  normalPosts: INormalPost[]
 }
 
 const Normal: React.FC<IProps> = props => {
-  const { } = props
+  const { normalPosts } = props
 
-  return <div>Normal</div>
+  return (
+    <div>
+    {
+      normalPosts.map(normalPost => (
+        <>
+          <WhiteSpace />
+          <Card>{normalPost.department}</Card>
+        </>
+      ))
+    }
+    </div>
+  )
 }
 
 
