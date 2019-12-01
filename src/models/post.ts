@@ -20,7 +20,7 @@ export interface INormalPost {
   startDate: number
   endDate: number
   /* 岗位拓展码，转换为二进制之后在进行相应的增减即可 */
-  code: number
+  // isNew: boolean
   /* 所展示的标签 */
   tags: string[]
   /* 岗位详情 */

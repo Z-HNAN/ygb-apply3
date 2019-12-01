@@ -1,10 +1,12 @@
 import request from '@/utils/request'
 
+import { INormalPost } from '@/models/post'
+
 /**
  * post service
  */
 
-interface IAPINormalPost {
+export interface IAPINormalPost {
   id: string
   /* 招工标题 */
   title: string
@@ -20,7 +22,7 @@ interface IAPINormalPost {
   /* 岗位拓展码，转换为二进制之后在进行相应的增减即可 */
   code: number
   /* 所展示的标签 */
-  tags: string[]
+  tags: string
   /* 岗位详情 */
   content: string
 }
@@ -32,25 +34,27 @@ export async function fetchNormalPost(): Promise<any> {
   const response = await request(`normalPost`)
 
   /* 过滤数据 */
-  const normalPosts: IAPINormalPost[] = response.map((normalPost: IAPINormalPost) => ({
-    id: normalPost.id,
-    title: normalPost.title,
-    department: normalPost.department,
-    departmentId: normalPost.departmentId,
-    /* 总报名人数 */
-    totalCount: normalPost.totalCount,
-    /* 现在报名人数 */
-    nowCount: normalPost.nowCount,
-    /* 日期均为timestamp */
-    startDate: normalPost.startDate,
-    endDate: normalPost.endDate,
-    /* 岗位拓展码，转换为二进制之后在进行相应的增减即可 */
-    code: normalPost.code,
-    /* 所展示的标签 */
-    tags: normalPost.tags,
-    /* 岗位详情 */
-    content: normalPost.content,
-  }))
+  const normalPosts: INormalPost[] = response.map((normalPost: IAPINormalPost) => {
+    /**
+     * 处理tags,按照`,`分割的方式
+     * 处理code,转换成需要的样式
+     */
+    const tags = normalPost.tags.split(',')
+
+    return {
+      id: normalPost.id,
+      title: normalPost.title,
+      department: normalPost.department,
+      departmentId: normalPost.departmentId,
+      totalCount: normalPost.totalCount,
+      nowCount: normalPost.nowCount,
+      startDate: normalPost.startDate,
+      endDate: normalPost.endDate,
+      // code: normalPost.code,
+      tags,
+      content: normalPost.content,
+    }
+  })
 
   return normalPosts
 }

@@ -8,6 +8,7 @@ import Component from './post'
 
 interface IProps {
   dispatch: Dispatch<AnyAction>
+  children?: any
 }
 
 interface IState {}
