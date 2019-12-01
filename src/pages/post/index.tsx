@@ -3,12 +3,14 @@ import { connect } from 'dva';
 
 import { IConnectState } from '@/models/connect.d'
 import { Dispatch, AnyAction } from 'redux';
+import { INormalPost } from '@/models/post'
 
 import Component from './post'
 
 interface IProps {
   dispatch: Dispatch<AnyAction>
   children?: any
+  normalPosts: INormalPost[]
 }
 
 interface IState {}

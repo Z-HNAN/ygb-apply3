@@ -28,7 +28,7 @@ export interface INormalPost {
 }
 
 export interface IPostModelState {
-  normalPosts?: INormalPost[]
+  normalPosts: INormalPost[]
 }
 
 export interface IPostModelType {
