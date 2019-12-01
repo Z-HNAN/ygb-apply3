@@ -23,6 +23,9 @@ export interface IProps {
   totalCount: number
   /* 所属标签 */
   tags: string[]
+
+  /* 回调函数 */
+  onClick?: () => void
 }
 
 const processWeekDate = (startDate: number, endDate: number): string => {
@@ -41,6 +44,7 @@ export const PostCard: React.FC<IProps> = props => {
     nowCount,
     totalCount,
     tags,
+    onClick,
   } = props
 
   const titleDOM = (
@@ -50,6 +54,10 @@ export const PostCard: React.FC<IProps> = props => {
   )
 
   const content = processWeekDate(startDate, endDate)
+
+  const handleClick = () => {
+    onClick && onClick()
+  }
 
   const footDOM = (
     <div className={styles.cardFoot}>
@@ -64,7 +72,7 @@ export const PostCard: React.FC<IProps> = props => {
   )
 
   return (
-    <Card full>
+    <Card full onClick={handleClick}>
       <Card.Header title={titleDOM} />
       <Card.Body>{content}</Card.Body>
       <Card.Footer content={footDOM}/>

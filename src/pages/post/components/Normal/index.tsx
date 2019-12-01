@@ -3,9 +3,10 @@ import React from 'react'
 import { INormalPost } from '@/models/post'
 
 import {
-  Card,
   WhiteSpace,
 } from 'antd-mobile'
+
+import PostCard from '@/components/PostCard'
 
 interface IProps {
   normalPosts: INormalPost[]
@@ -14,16 +15,20 @@ interface IProps {
 const Normal: React.FC<IProps> = props => {
   const { normalPosts } = props
 
+  const handleClickPost = (id: string) => {
+    // console.log(id)
+  }
+
+  const postCardsDOM = normalPosts.map(normalPost => (
+    <>
+      <WhiteSpace />
+      <PostCard {...normalPost} onClick={() => { handleClickPost(normalPost.id)}} />
+    </>
+  ))
+
   return (
-    <div>
-    {
-      normalPosts.map(normalPost => (
-        <>
-          <WhiteSpace />
-          <Card>{normalPost.department}</Card>
-        </>
-      ))
-    }
+    <div style={{width: '100vw'}}>
+      {postCardsDOM}
     </div>
   )
 }
