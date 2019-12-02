@@ -12,6 +12,7 @@ const routes: IRoute[] = [
     component: '../layouts/BasicLayout',
     routes: [
       { path: '/post', component: './post', title: '岗位' },
+      { path: '/postInfo', component: './postInfo', title: '岗位详情' },
       { path: '/schedule', component: './schedule', title: '计划' },
       { path: '/me', component: './me', title: '我的' },
       { path: '/users', component: './users', title: '用户' },

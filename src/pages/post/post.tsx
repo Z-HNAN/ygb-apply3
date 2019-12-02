@@ -3,7 +3,6 @@
  */
 import React from 'react'
 import { StickyContainer, Sticky } from 'react-sticky'
-import { connect } from 'dva';
 import {
   Button,
   Tabs,
