@@ -33,12 +33,17 @@ const InfoWork: React.FC<IProps> = props => {
     month
   }))
 
+  /**
+   * 设置显示的月份
+   */
+  const [month, setMonth] = React.useState('')
+
   const renderTabContent = (tab: ITbas) => {
     /**
      * 寻找合适的岗位信息，并加以渲染
      */
     const postWork = postWorks.find((postWork) => postWork.YYYYMMDD === tab.YYYYMMDD) as IPostWork
-
+    setMonth(postWork.month)
     return (
       <WorkContent works={postWork.works} />
     )
@@ -47,7 +52,7 @@ const InfoWork: React.FC<IProps> = props => {
   return (
     <div>
       <div className={styles.todayTips}>
-        <span className={styles.selectMonth}>6月</span>
+        <span className={styles.selectMonth}>{month}</span>
         <span className={styles.today}>今日： {today}</span>
       </div>
       <Tabs tabs={tabs} renderTabBar={props => <Tabs.DefaultTabBar {...props} page={3} />}>
