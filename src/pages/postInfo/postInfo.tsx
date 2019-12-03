@@ -16,6 +16,7 @@ import styles from './postInfo.less'
 
 export interface IProps {
   loading: boolean
+  applyAble: boolean
   postInfo: IPostInfo
 }
 
@@ -23,7 +24,7 @@ const tabs = [{title: '岗位详情', sub: 'info'},{title: '时间安排', sub: 
 
 const PostInfo: React.FC<IProps> = (props) => {
 
-  const { loading, postInfo } = props
+  const { loading, applyAble, postInfo } = props
 
   if (loading === true) {
     Toast.loading('加载中...', 0)
@@ -63,7 +64,7 @@ const PostInfo: React.FC<IProps> = (props) => {
         </StickyContainer>
       </div>
       <div className={styles.foot}>
-        <Button className={styles.button} type='primary'>立即报名</Button>
+        <Button className={styles.button} type='primary' disabled={applyAble === false}>立即报名</Button>
       </div>
     </div>
   )

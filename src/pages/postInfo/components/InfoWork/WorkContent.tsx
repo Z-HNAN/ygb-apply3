@@ -98,7 +98,7 @@ const WorkContent: React.FC<IProps> = props => {
         checked={selectWorkId === work.id}
         disabled={work.nowCount >= work.totalCount}
         remark={work.remark}
-        onClick={() => { handleClick(work.id, work.nowCount >= work.totalCount) }}
+        onClick={handleClick.bind(null, work.id, work.nowCount >= work.totalCount)}
       />
       ))
     }

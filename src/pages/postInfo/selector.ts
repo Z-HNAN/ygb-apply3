@@ -77,3 +77,28 @@ export const postInfoSelector = createSelector(
     return postInfo
   }
 )
+
+/**
+ * 当前是否可以报名，判断是否选中了selectWorkId
+ */
+export const applyAbleSelector = createSelector(
+  [
+    (state: IConnectState) => state.postInfo.selectWorkId
+  ],
+  (selectWorkId) => {
+    return selectWorkId !== null
+  }
+)
+
+/**
+ * 判断当前组件内是否有数据，是否可以用作展示，
+ * 判断currentPostId是否为null
+ */
+export const displayAbleSelector = createSelector(
+  [
+    (state: IConnectState) => state.postInfo.currentPostId
+  ],
+  (currentPostId) => {
+    return currentPostId !== null
+  }
+)
