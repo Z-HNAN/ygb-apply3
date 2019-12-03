@@ -11,15 +11,17 @@ import styles from './CircleRadio.less'
 export interface IProps {
   className?: string
   checked?: boolean
+  disabled?: boolean
 }
 
 const CircleRadio: React.FC<IProps> = props => {
   const {
     className: classNameProp,
-    checked = false
+    checked = false,
+    disabled = false,
   } = props
 
-  const className = `${classNameProp} ${styles.root} ${checked === true && styles.checked}`
+  const className = `${classNameProp} ${styles.root} ${checked === true && styles.checked} ${disabled === true && styles.disabled}`
 
   return (
     <div className={className}>
