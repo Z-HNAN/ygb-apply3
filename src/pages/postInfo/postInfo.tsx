@@ -2,10 +2,12 @@ import React from 'react'
 import { StickyContainer, Sticky } from 'react-sticky'
 
 import {
+  Button,
   Tabs,
 } from 'antd-mobile'
 
 import InfoHead from './components/InfoHead'
+import InfoWork from './components/InfoWork'
 
 import styles from './postInfo.less'
 
@@ -36,17 +38,24 @@ const PostInfo: React.FC<IProps> = (props) => {
       <div className={styles.body}>
         <StickyContainer>
           <Tabs tabs={tabs} renderTabBar={renderTabBar}>
-            <div className={styles.tabContainer} key='info'>
+          {/*
+
+            <div className={styles.tabContainerInfo} key='info'>
               <h2 className={styles.tabContainerTitle}>岗位详情</h2>
               <p className={styles.tabContainerParagraph}>
                 postConent
               </p>
             </div>
-            <div className={styles.tabContainer}  key='time'>
-              Content of second tab
+          */}
+            
+            <div className={styles.tabContainerTime}  key='time'>
+              <InfoWork />
             </div>
           </Tabs>
         </StickyContainer>
+      </div>
+      <div className={styles.foot}>
+        <Button className={styles.button} type='primary'>立即报名</Button>
       </div>
     </div>
   )
