@@ -33,7 +33,7 @@ const InfoWork: React.FC<IProps> = props => {
 
   const renderTabContent = (tab: ITbas) => (
     <div>
-      <WorkContent />
+    workContent
     </div>
   )
 

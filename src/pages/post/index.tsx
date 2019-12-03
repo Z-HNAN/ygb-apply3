@@ -1,40 +1,56 @@
+/**
+ * 岗位大厅
+ */
+
 import React from 'react'
-import { connect } from 'dva';
+import { StickyContainer, Sticky } from 'react-sticky'
+import {
+  Button,
+  Tabs,
+} from 'antd-mobile'
 
-import { IConnectState } from '@/models/connect.d'
-import { Dispatch, AnyAction } from 'redux';
-import { INormalPost } from '@/models/post'
+import DeparmentComponent from './components/Department'
+import NormalComponent from './components/Normal'
 
-import Component from './post'
+import styles from './index.less'
+
 
 interface IProps {
-  dispatch: Dispatch<AnyAction>
-  children?: any
-  normalPosts: INormalPost[]
 }
 
-interface IState {}
+const tabs = [
+  { title: '普通岗位', key: 'normal' },
+  { title: '公寓中心', key: 'department' },
+]
 
-const mapStateToProps = (state: IConnectState) => {
-  const { normalPosts } = state.post
-  return {
-    normalPosts,
+const Post: React.FC<IProps> = props => {
+  const { } = props
+
+  function renderTabBar(props: any) {
+    return (
+      <Sticky>
+        {({ style }) => <div style={{...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
+      </Sticky>
+    )
   }
+
+  return (
+    <div>
+      <StickyContainer>
+        <Tabs
+          tabs={tabs}
+          renderTabBar={renderTabBar}
+        >
+          <div className={styles.tabsContainer} key='normal'>
+            <NormalComponent />
+          </div>
+          <div className={styles.tabsContainer} key='department'>
+            <DeparmentComponent />
+          </div>
+        </Tabs>
+      </StickyContainer>
+    </div>
+  )
 }
 
-class Post extends React.PureComponent<IProps, IState> {
-  componentDidMount() {
-    const { dispatch } = this.props
-    /**
-     * 拉取普通岗位信息
-     */
-    dispatch({ type: 'post/fetchNormalPost' })
-  }
-
-  render() {
-    return (<Component {...this.props} />)
-  }
-}
-
-
-export default connect(mapStateToProps)(Post)
+export default Post
