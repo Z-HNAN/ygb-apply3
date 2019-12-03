@@ -4,6 +4,7 @@ import { StickyContainer, Sticky } from 'react-sticky'
 import {
   Button,
   Tabs,
+  Toast,
 } from 'antd-mobile'
 
 import { IPostInfo } from './selector'
@@ -14,6 +15,7 @@ import InfoWork from './components/InfoWork'
 import styles from './postInfo.less'
 
 export interface IProps {
+  loading: boolean
   postInfo: IPostInfo
 }
 
@@ -21,7 +23,13 @@ const tabs = [{title: '岗位详情', sub: 'info'},{title: '时间安排', sub: 
 
 const PostInfo: React.FC<IProps> = (props) => {
 
-  const { postInfo } = props
+  const { loading, postInfo } = props
+
+  if (loading === true) {
+    Toast.loading('加载中...', 0)
+  } else {
+    Toast.hide()
+  }
 
   /* 渲染岗位详情的吊顶 */
   const renderTabBar = (props: any) => (

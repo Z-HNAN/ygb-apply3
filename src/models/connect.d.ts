@@ -6,7 +6,19 @@ import { IPostInfoModelState } from './postInfo'
 
 export { IUsersModelState, IPostModelState, IPostInfoModelState }
 
+export interface Loading {
+  global: boolean;
+  effects: { [key: string]: boolean | undefined };
+  models: {
+    global?: boolean;
+    users?: boolean;
+    post?: boolean;
+    postInfo?: boolean;
+  };
+}
+
 export interface IConnectState {
+  loading: Loading
   users: IUsersModelState
   post: IPostModelState
   postInfo: IPostInfoModelState

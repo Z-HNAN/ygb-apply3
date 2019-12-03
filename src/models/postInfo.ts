@@ -32,6 +32,8 @@ export interface IPostInfoModelType {
 	reducers: {
 		/* 改变postInfo id */
 		changePostInfoId: Reducer<IPostInfoModelState>
+		/* 清除所有信息 */
+		clear: Reducer<IPostInfoModelState>
 		/* 保存works */
 		saveWorks: Reducer<IPostInfoModelState>
 		/* 改变选中的workId */
@@ -59,6 +61,13 @@ const PostInfoModel: IPostInfoModelType = {
 			return {
 				...(state as IPostInfoModelState),
 				currentPostId: postInfoId,
+			}
+		},
+		clear(_, action) {
+			return {
+				currentPostId: null,
+				selectWorkId: null,
+				works: [],
 			}
 		},
 		saveWorks(state, action) {
