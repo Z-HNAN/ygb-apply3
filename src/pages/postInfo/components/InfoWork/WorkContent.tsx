@@ -1,4 +1,7 @@
 import React from 'react'
+import { connect } from 'dva'
+import { Dispatch, AnyAction } from 'redux'
+import { IConnectState } from '@/models/connect.d'
 import moment, { Moment } from 'moment'
 import {
   Icon,
@@ -22,6 +25,7 @@ interface IWorkItem {
   checked: boolean
   disabled: boolean
   remark: string
+  onClick: () => void
 }
 
 /**
@@ -35,10 +39,11 @@ const Work: React.FC<IWorkItem> = props => {
     checked,
     disabled,
     remark,
+    onClick,
   } = props
 
   return (
-    <div className={styles.work}>
+    <div className={styles.work} onClick={onClick}>
       <div className={styles.main}>
         <div className={styles.workTime}>{displayTime}</div>
         <div className={styles.workOption}>
@@ -52,6 +57,8 @@ const Work: React.FC<IWorkItem> = props => {
 }
 
 export interface IProps {
+  dispatch: Dispatch<AnyAction>
+  selectWorkId: string | null
   works: INormalWork[]
 }
 
@@ -68,7 +75,16 @@ function displayAccurateTime(startTime: number, endTime: number): string {
 }
 
 const WorkContent: React.FC<IProps> = props => {
-  const { works } = props
+  const {
+    dispatch,
+    works,
+    selectWorkId,
+  } = props
+
+  function handleClick(workId: string, disabled: boolean) {
+    if (disabled === true) { return }
+    dispatch({ type: 'postInfo/selectWork', payload: { workId }})
+  }
 
   return (
     <div className={styles.root}>
@@ -79,9 +95,10 @@ const WorkContent: React.FC<IProps> = props => {
         displayTime={displayAccurateTime(work.startTime, work.endTime)}
         nowCount={work.nowCount}
         totalCount={work.totalCount}
-        checked={false}
-        disabled={false}
+        checked={selectWorkId === work.id}
+        disabled={work.nowCount >= work.totalCount}
         remark={work.remark}
+        onClick={() => { handleClick(work.id, work.nowCount >= work.totalCount) }}
       />
       ))
     }
@@ -89,4 +106,11 @@ const WorkContent: React.FC<IProps> = props => {
   )
 }
 
-export default WorkContent
+const mapStateToProps = (state: IConnectState) => {
+  const { selectWorkId } = state.postInfo
+  return {
+    selectWorkId,
+  }
+}
+
+export default connect(mapStateToProps)(WorkContent)

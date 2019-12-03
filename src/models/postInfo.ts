@@ -15,8 +15,11 @@ export interface INormalWork {
 export interface IPostInfoModelState {
 	// 当前的postId
 	currentPostId: string | null
+	// 当前选中的工作时间段
+	selectWorkId: string | null
 	// 当前的工作
 	works: INormalWork[]
+
 }
 
 export interface IPostInfoModelType {
@@ -31,6 +34,8 @@ export interface IPostInfoModelType {
 		changePostInfoId: Reducer<IPostInfoModelState>
 		/* 保存works */
 		saveWorks: Reducer<IPostInfoModelState>
+		/* 改变选中的workId */
+		selectWork: Reducer<IPostInfoModelState>
 	}
 }
 
@@ -38,6 +43,7 @@ const PostInfoModel: IPostInfoModelType = {
 	namespace: 'postInfo',
 	state: {
 		currentPostId: null,
+		selectWorkId: null,
 		works: [],
 	},
 	effects: {
@@ -61,7 +67,14 @@ const PostInfoModel: IPostInfoModelType = {
 				...(state as IPostInfoModelState),
 				works,
 			}
-		}
+		},
+		selectWork(state, action) {
+			const { workId } = action.payload
+			return {
+				...(state as IPostInfoModelState),
+				selectWorkId: workId,
+			}
+		},
 	},
 }
 
