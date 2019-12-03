@@ -7,6 +7,8 @@ import {
 import Progress from '@/components/Progress'
 import CircleRadio from '@/components/CircleRadio'
 
+import { INormalWork } from '@/models/postInfo'
+
 import styles from './WorkContent.less'
 
 /**
@@ -18,7 +20,8 @@ interface IWorkItem {
   nowCount: number
   totalCount: number
   checked: boolean
-  reamark: string
+  disabled: boolean
+  remark: string
 }
 
 /**
@@ -30,7 +33,8 @@ const Work: React.FC<IWorkItem> = props => {
     nowCount,
     totalCount,
     checked,
-    reamark,
+    disabled,
+    remark,
   } = props
 
   return (
@@ -39,26 +43,16 @@ const Work: React.FC<IWorkItem> = props => {
         <div className={styles.workTime}>{displayTime}</div>
         <div className={styles.workOption}>
           <Progress className={styles.workProgress} now={nowCount} total={totalCount} />
-          <CircleRadio checked={checked} className={styles.workRadio}/>
+          <CircleRadio checked={checked} disabled={disabled} className={styles.workRadio}/>
         </div>
       </div>
-      <div className={styles.remark}>{reamark}</div>
+      <div className={styles.remark}>{remark}</div>
     </div>
   )
 }
 
-export interface IWork {
-  /* 开始结束时间均为时间戳 */
-  workId: string
-  startTime: number
-  endTime: number
-  nowCount: number
-  totalCount: number
-  reamark: string
-} 
-
 export interface IProps {
-  works: IWork[]
+  works: INormalWork[]
 }
 
 /**
@@ -81,11 +75,13 @@ const WorkContent: React.FC<IProps> = props => {
     {
       works.map(work => (
       <Work
+        key={work.id}
         displayTime={displayAccurateTime(work.startTime, work.endTime)}
         nowCount={work.nowCount}
         totalCount={work.totalCount}
         checked={false}
-        reamark={work.reamark}
+        disabled={false}
+        remark={work.remark}
       />
       ))
     }

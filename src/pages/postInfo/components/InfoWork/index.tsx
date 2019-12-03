@@ -6,36 +6,43 @@ import {
 import moment from 'moment'
 
 import { getWeekday } from '@/utils/momentExtends'
+import { IPostWork } from '../../selector'
 
 import WorkContent from './WorkContent'
 
 import styles from './infoWork.less'
 
 export interface IProps {
-
+  postWorks: IPostWork[]
 }
 
 interface ITbas {
+  YYYYMMDD: string
   title: string
-  workId: string
+  month: string
 }
 
 const InfoWork: React.FC<IProps> = props => {
-  const {} = props
+  const { postWorks } = props
 
   const today = `${moment().format('MM月DD日（')}` + `${getWeekday(moment())}）`
 
-  const tabs: ITbas[] = [
-    { title: '17号（周二）', workId: '1' },
-    { title: '18号（周三）', workId: '2'  },
-    { title: '19号（周四）', workId: '3'  }
-  ]
+  const tabs: ITbas[] = postWorks.map(({ YYYYMMDD, title, month }) => ({
+    YYYYMMDD,
+    title,
+    month
+  }))
 
-  const renderTabContent = (tab: ITbas) => (
-    <div>
-    workContent
-    </div>
-  )
+  const renderTabContent = (tab: ITbas) => {
+    /**
+     * 寻找合适的岗位信息，并加以渲染
+     */
+    const postWork = postWorks.find((postWork) => postWork.YYYYMMDD === tab.YYYYMMDD) as IPostWork
+
+    return (
+      <WorkContent works={postWork.works} />
+    )
+  }
 
   return (
     <div>

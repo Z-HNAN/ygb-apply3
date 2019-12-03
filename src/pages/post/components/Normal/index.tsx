@@ -1,4 +1,5 @@
 import React from 'react'
+import router from 'umi/router'
 import { connect } from 'dva';
 
 import { IConnectState } from '@/models/connect.d'
@@ -31,19 +32,22 @@ const Normal: React.FC<IProps> = props => {
   } = props
 
   const handleClickPost = (id: string) => {
-    // console.log(id)
+    // 替换岗位详情Id, 拉取工作信息，跳转页面
+    dispatch({ type: 'postInfo/changePostInfoId', payload: { postInfoId: id }})
+    dispatch({ type: 'postInfo/fetchWork', payload: { postInfoId: id }})
+    router.push('/postInfo')
   }
 
   React.useEffect(() => {
     // 挂载组建后,拉取所有normal
-    dispatch({ type: 'post/fetchNormalPost' })
+    dispatch({ type: 'post/initNormalPost' })
   }, [])
 
   const postCardsDOM = normalPosts.map(normalPost => (
-    <>
+    <React.Fragment key={normalPost.id}>
       <WhiteSpace />
       <PostCard {...normalPost} onClick={() => { handleClickPost(normalPost.id)}} />
-    </>
+    </React.Fragment>
   ))
 
   return (

@@ -66,7 +66,7 @@ export const PostCard: React.FC<IProps> = props => {
       </div>
       <div>
       {
-        tags.map(text => (<Tag className={styles.cardFootTag} small>{text}</Tag>))}
+        tags.map(text => (<Tag key={text} className={styles.cardFootTag} small>{text}</Tag>))}
       </div>
     </div>
   )

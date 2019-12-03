@@ -33,4 +33,4 @@ const mapStateToProps = (state: IConnectState) => {
   return {}
 }
 
-export default withRouter(connect(mapStateToProps)(BasicLayout))
+export default React.memo(withRouter(connect(mapStateToProps)(BasicLayout)))

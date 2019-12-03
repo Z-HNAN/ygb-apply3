@@ -34,8 +34,8 @@ const InfoHead: React.FC<IProps> = props => {
 
   const contentTags = (
     <div>
-     {
-      tags.map(text => (<Tag className={styles.tag} small>{text}</Tag>))}
+    {
+      tags.map(text => (<Tag key={text} className={styles.tag} small>{text}</Tag>))}
     </div>
   )
 
@@ -50,7 +50,6 @@ const InfoHead: React.FC<IProps> = props => {
     'tags': contentTags,
     'contact': contentContact,
   }
-
   const avator = department.slice(0, 1)
 
   return (

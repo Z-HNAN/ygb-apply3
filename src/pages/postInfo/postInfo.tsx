@@ -6,18 +6,22 @@ import {
   Tabs,
 } from 'antd-mobile'
 
+import { IPostInfo } from './selector'
+
 import InfoHead from './components/InfoHead'
 import InfoWork from './components/InfoWork'
 
 import styles from './postInfo.less'
 
 export interface IProps {
-
+  postInfo: IPostInfo
 }
 
 const tabs = [{title: '岗位详情', sub: 'info'},{title: '时间安排', sub: 'time'}]
 
 const PostInfo: React.FC<IProps> = (props) => {
+
+  const { postInfo } = props
 
   /* 渲染岗位详情的吊顶 */
   const renderTabBar = (props: any) => (
@@ -31,25 +35,21 @@ const PostInfo: React.FC<IProps> = (props) => {
       <InfoHead
         className={styles.head}
         content='tags'
-        department='义务工作发展部'
-        title='保卫处招募交通志愿者'
-        tags={['助工', '时间灵活']}
+        department={postInfo.department}
+        title={postInfo.title}
+        tags={postInfo.tags}
       />
       <div className={styles.body}>
         <StickyContainer>
           <Tabs tabs={tabs} renderTabBar={renderTabBar}>
-          {/*
-
             <div className={styles.tabContainerInfo} key='info'>
               <h2 className={styles.tabContainerTitle}>岗位详情</h2>
               <p className={styles.tabContainerParagraph}>
-                postConent
+                {postInfo.content}
               </p>
             </div>
-          */}
-            
-            <div className={styles.tabContainerTime}  key='time'>
-              <InfoWork />
+            <div className={styles.tabContainerTime} key='time'>
+              <InfoWork postWorks={postInfo.postWorks} />
             </div>
           </Tabs>
         </StickyContainer>
