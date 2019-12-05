@@ -1,0 +1,49 @@
+@import '~@/theme/theme.less';
+
+// 按钮高度单位
+@buttonHeight: 30px;
+
+.root {
+  // border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.line() {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.doubleDepartment {
+  height: 2 * @buttonHeight + 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.line18to32 {
+  // border: 1px solid red;
+  .line();
+  flex: 1;
+}
+
+.line21to30 {
+  // border: 1px solid red;
+  .line();
+  flex: 2;
+}
+
+.line8to28 {
+  // border: 1px solid red;
+  .line();
+  flex: 2;
+}
+
+.line4to27 {
+  // border: 1px solid red;
+  .line();
+  flex: 1;
+}

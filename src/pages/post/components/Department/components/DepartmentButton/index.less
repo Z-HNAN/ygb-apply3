@@ -1,0 +1,54 @@
+@import '~@/theme/theme.less';
+
+// 按钮高度单位
+@buttonHeight: 30px;
+
+// 男女按钮颜色
+@male: #01a5ed;
+@female: #ffc0cb;
+
+.root {
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  height: 1 * @buttonHeight;
+  line-height: 1 * @buttonHeight;
+  border-radius: @radius-sm;
+}
+
+.double {
+  height: 2 * @buttonHeight; 
+  line-height: 2 * @buttonHeight;
+}
+
+.button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+}
+
+.female {
+  background: @female !important;
+}
+.male {
+  background: @male !important;
+}
+.other {
+  background: @fill-body !important;
+}
+
+.femaleActive {
+  background: darken(@female, 10%) !important;
+}
+.maleActive {
+  background: darken(@male, 10%) !important;
+}
+.otherActive {}
+
+.active {
+  background: @brand-warning !important;
+}
+
