@@ -17,6 +17,7 @@
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",
     "react": "^16.8.6",
+    "react-amap": "^1.2.8",
     "react-dom": "^16.8.6",
     "react-sticky": "^6.0.3",
     "reselect": "^4.0.0",
