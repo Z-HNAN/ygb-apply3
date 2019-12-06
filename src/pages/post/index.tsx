@@ -9,7 +9,7 @@ import {
   Tabs,
 } from 'antd-mobile'
 
-import DeparmentComponent from './components/Department'
+import AparmentComponent from './components/Apartment'
 import NormalComponent from './components/Normal'
 
 import styles from './index.less'
@@ -45,7 +45,7 @@ const Post: React.FC<IProps> = props => {
             <NormalComponent />
           </div>
           <div className={styles.tabsContainer} key='normal'>
-            <DeparmentComponent />
+            <AparmentComponent />
           </div>
         </Tabs>
       </StickyContainer>

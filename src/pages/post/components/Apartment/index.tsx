@@ -13,7 +13,7 @@ interface IProps {
 
 }
 
-const Department: React.FC<IProps> = props => {
+const Apartment: React.FC<IProps> = props => {
   const { } = props
 
   const [depId, setDepId] = React.useState('')
@@ -37,4 +37,4 @@ const Department: React.FC<IProps> = props => {
 }
 
 
-export default Department
+export default Apartment
