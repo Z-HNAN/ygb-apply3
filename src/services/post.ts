@@ -1,11 +1,14 @@
 import request from '@/utils/request'
 
-import { INormalPost } from '@/models/post'
+import { INormalPost, ApartmentPostType, ApartmentWorkType } from '@/models/post'
 
 /**
  * post service
  */
 
+ /**
+  * normalPost的API返回形式
+  */
 export interface IAPINormalPost {
   id: string
   /* 招工标题 */
@@ -57,6 +60,66 @@ export async function fetchNormalPost(): Promise<any> {
   })
 
   return normalPosts
+}
+
+/**
+ * 获取指定的公寓中心下的岗位信息
+ */
+export async function fetchApartmentPost(
+  { apartmentId }: { apartmentId: string }
+): Promise<any> {
+  const response = await request(`apartmentPost/${apartmentId}`)
+  
+  /**
+   * 过滤数据
+   */
+  const apartmentPostsalPosts: ApartmentPostType[] = response.map((aprtmentPost: any) => {
+    /**
+     * 需要计算的人数信息
+     */
+    let nowCount = 0
+    let totalCount = 0
+
+    /**
+     * 处理tags,按照`,`分割的方式
+     * 处理code,转换成需要的样式
+     */
+    const tags = aprtmentPost.tags.split(',')
+
+    /**
+     * 过滤具体的工作信息
+     */
+    const works: ApartmentWorkType[] = aprtmentPost.works.map((apartmentWork: any) => {
+      nowCount += apartmentWork.nowCount
+      totalCount += apartmentWork.totalCount
+
+      return {
+        id: apartmentWork.id,
+        descriptionTime: apartmentWork.descriptionTime,
+        nowCount: apartmentWork.nowCount,
+        totalCount: apartmentWork.totalCount,
+        remark: apartmentWork.remark,
+      }
+    })
+
+    /**
+     * 过滤最终的公寓岗位结构
+     */
+    return {
+      id: aprtmentPost.id,
+      title: aprtmentPost.title,
+      apartment: aprtmentPost.apartment,
+      apartmentId: aprtmentPost.apartmentId,
+      totalCount,
+      nowCount,
+      date: aprtmentPost.date,
+      tags,
+      content: aprtmentPost.content,
+      works,
+    }
+  })
+
+  return apartmentPostsalPosts
 }
 
 

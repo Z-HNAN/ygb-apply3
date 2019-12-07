@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'dva'
-
+import { IConnectState } from '@/models/connect.d'
 import { Dispatch, AnyAction } from 'redux'
+
 import {
   WhiteSpace,
 } from 'antd-mobile'
@@ -9,24 +10,38 @@ import Map from './components/Map'
 
 import styles from './index.less'
 
-interface IProps {
-
+interface OwnProps {
+  dispatch: Dispatch
 }
 
-const Apartment: React.FC<IProps> = props => {
-  const { } = props
+const mapStateToProps = (state: IConnectState) => {
+  return {
 
-  const [depId, setDepId] = React.useState('')
+  }
+}
+
+const Apartment: React.FC<OwnProps> = props => {
+  const {
+    dispatch,
+  } = props
+
+  const [aptId, setAptId] = React.useState('18')
 
   const handleClick = (id: string) => {
-    setDepId(id)
+    setAptId(id)
+    dispatch({ type: 'post/initApartmentPost' , payload: { apartmentId: id }})
   }
+
+  /* 挂载组建后，拉取所有的公寓中心岗位 */
+  React.useEffect(() => {
+    dispatch({ type: 'post/initApartmentPost' , payload: { apartmentId: aptId }})
+  }, [])
 
   return (
     <div className={styles.root}>
       <WhiteSpace />
       <div className={styles.map}>
-        <Map selectedId={depId} onClick={handleClick}/>
+        <Map selectedId={aptId} onClick={handleClick}/>
       </div>
       <WhiteSpace />
       <div className={styles.info}>
@@ -37,4 +52,4 @@ const Apartment: React.FC<IProps> = props => {
 }
 
 
-export default Apartment
+export default connect(mapStateToProps)(Apartment)
