@@ -58,9 +58,10 @@ const PostInfo: React.FC<IProps> = (props) => {
           <Tabs tabs={tabs} renderTabBar={renderTabBar}>
             <div className={styles.tabContainerInfo} key='info'>
               <h2 className={styles.tabContainerTitle}>岗位详情</h2>
-              <p className={styles.tabContainerParagraph}>
-                {postInfo.content}
-              </p>
+              <p
+                className={styles.tabContainerParagraph}
+                dangerouslySetInnerHTML={{__html: postInfo.content}}
+              />
             </div>
             <div className={styles.tabContainerTime} key='time'>
               <InfoWork postWorks={postInfo.postWorks} />
