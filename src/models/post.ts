@@ -4,6 +4,19 @@ import { Subscription, Effect } from 'dva'
 import { IConnectState } from './connect.d'
 import { unionBy } from 'lodash'
 import * as postService from '@/services/post'
+import { identifier } from '@babel/types'
+
+/**
+ * 基本岗位的工作类型
+ */
+export interface NormalWorkType {
+  id: string
+  startTime: number
+  endTime: number
+  nowCount: number
+  totalCount: number
+  remark: string
+}
 
 /**
  * 基本岗位结构
@@ -27,6 +40,8 @@ export interface INormalPost {
   tags: string[]
   /* 岗位详情 */
   content: string
+  /* 对应的工作 */
+  works: NormalWorkType[]
 }
 
 /**
@@ -75,12 +90,15 @@ export interface IPostModelType {
   namespace: 'post'
   state: IPostModelState
   effects: {
-    /* 拉取岗位 */
+    /* 拉取公寓岗位 */
     fetchApartmentPost: Effect
+    /* 拉取普通工作 */
     fetchNormalPost: Effect
+    fetchNormalWork: Effect
     /* 初始化岗位 */
     initApartmentPost: Effect
     initNormalPost: Effect
+    initNormalWork: Effect
   }
   reducers: {
     /* 追加岗位 */
@@ -88,6 +106,7 @@ export interface IPostModelType {
     /* 保存岗位 */
     saveApartmentPost: Reducer<any>
     saveNormalPost: Reducer<any>
+    saveNormalWorks: Reducer<any>
   }
 }
 
@@ -98,7 +117,7 @@ const PostModel: IPostModelType = {
     apartmentPosts: {},
   },
   effects: {
-    *fetchApartmentPost({ payload }, { call, put, select }) {
+    *fetchApartmentPost({ payload }, { call, put }) {
       const { apartmentId } = payload
       const apartmentPosts = yield call(postService.fetchApartmentPost, { apartmentId })
       yield put ({ type: 'saveApartmentPost', payload: { apartmentId, apartmentPosts } })
@@ -117,6 +136,11 @@ const PostModel: IPostModelType = {
         const normalPosts = yield call(postService.fetchNormalPost, { start: 1 })
         yield put({ type: 'saveNormalPost', payload: { normalPosts } })
       }
+    },
+    *fetchNormalWork({ payload }, { call, put }) {
+      const { currentPostId } = payload
+      const normalWorks = yield call(postService.fetchNormalWork, { id: currentPostId })
+      yield put({ type: 'saveNormalWorks', payload: { currentPostId, works: normalWorks } })
     },
     *initApartmentPost({ payload }, { put, select }) {
       const { apartmentId } = payload
@@ -141,7 +165,18 @@ const PostModel: IPostModelType = {
         yield put({ type:'fetchNormalPost', payload: { append: false } })
       }
     },
+    *initNormalWork({ payload }, { put, select }) {
+      const { currentPostId } = payload
 
+      const currentNormalPost: INormalPost = yield select(
+        (state: IConnectState) => state.post.normalPosts.find(({ id }) => id === currentPostId)
+      )
+      if (currentNormalPost === undefined) return
+
+      if (currentNormalPost.works.length <= 0) {
+        yield put({ type: 'fetchNormalWork', payload: { currentPostId } })
+      }
+    },
   },
   reducers: {
     appendNormalPost(state: IPostModelState, action) {
@@ -172,7 +207,25 @@ const PostModel: IPostModelType = {
         ...state,
         normalPosts,
       }
-    }
+    },
+    saveNormalWorks(state: IPostModelState, action) {
+      /**
+       * 寻找出岗位的id,并且替换填充该岗位的works
+       */
+      const { currentPostId, works } = action.payload
+      const normalPostIndex = state.normalPosts.findIndex(({ id }) => id === currentPostId)
+      return {
+        ...state,
+        normalPosts: [
+          ...state.normalPosts.slice(0, normalPostIndex),
+          {
+            ...state.normalPosts[normalPostIndex],
+            works,
+          },
+          ...state.normalPosts.slice(normalPostIndex + 1),
+        ],
+      }
+    },
   },
 }
 

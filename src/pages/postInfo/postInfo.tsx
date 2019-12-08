@@ -22,7 +22,7 @@ export interface IProps {
   postInfo: IPostInfo
 }
 
-const tabs = [{title: '岗位详情', sub: 'info'},{title: '时间安排', sub: 'time'}]
+const tabs = [{title: '岗位详情', sub: 'info'}, {title: '时间安排', sub: 'time'}]
 
 const PostInfo: React.FC<IProps> = (props) => {
 

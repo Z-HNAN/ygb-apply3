@@ -33,8 +33,7 @@ const Normal: React.FC<IProps> = props => {
 
   const handleClickPost = (id: string) => {
     // 替换岗位详情Id, 拉取工作信息，跳转页面
-    dispatch({ type: 'postInfo/changePostInfoId', payload: { postInfoId: id }})
-    dispatch({ type: 'postInfo/fetchWork', payload: { postInfoId: id }})
+    dispatch({ type: 'postInfo/changePostInfo', payload: { postInfoId: id, postType: 'normal' }})
     router.push('/postInfo')
   }
 

@@ -6,7 +6,7 @@ import {
 import moment from 'moment'
 
 import { getWeekday } from '@/utils/momentExtends'
-import { IPostWork } from '../../selector'
+import { IPostWork } from '../../selecter'
 
 import WorkContent from './WorkContent'
 

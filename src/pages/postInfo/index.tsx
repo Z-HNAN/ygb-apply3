@@ -11,6 +11,7 @@ import {
   applyAbleSelector,
   displayAbleSelector,
 } from './selector'
+
 import Component from './postInfo'
 
 export interface IProps {
@@ -26,21 +27,21 @@ export interface IState {}
 
 const mapStateToProps = (state: IConnectState) => {
   return {
-    loading: (state.loading.models.postInfo) as boolean,
+    loading: (state.loading.models.post) as boolean,
+    /* 岗位详情 */
     postInfo: postInfoSelector(state),
     /* 是否可报名 */
     applyAble: applyAbleSelector(state),
-    /* 是否可以展示（是否有数据，重复刷新可能会造成此问题）*/
-    displayAble: displayAbleSelector(state),
   }
 }
 
 class PostInfo extends React.PureComponent<IProps, IState> {
   componentDidMount () {
-    /* 判断是否有数据，否则进行跳转 */
-    if (this.props.displayAble === false) {
-      router.push('/post')
-    }
+    /**
+     * 初始化postInfo的数据
+     * 包括数据的拉取，和检查数据是否正常等
+     */
+    this.props.dispatch({ type: 'postInfo/init' })
   }
   componentWillUnmount () {
     /* 销毁组件，清理数据 */
