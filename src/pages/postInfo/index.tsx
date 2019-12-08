@@ -9,7 +9,6 @@ import {
   IPostInfo,
   postInfoSelector,
   applyAbleSelector,
-  displayAbleSelector,
 } from './selector'
 
 import Component from './postInfo'

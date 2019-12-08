@@ -53,11 +53,12 @@ const hasPostId = createSelector(
 const normalWorkInfoSelector = createSelector(
   [
     hasPostId,
+    (state: IConnectState) => state.postInfo.postType,
     (state: IConnectState) => state.postInfo.currentPostId,
     (state: IConnectState) => state.post.normalPosts,
   ],
-  (hasPostId, postId, normalPosts) => {
-    if (hasPostId === false) { return NULL_POSTINFO }
+  (hasPostId, postType, postId, normalPosts) => {
+    if (hasPostId === false || postType !== 'normal' ) { return NULL_POSTINFO }
 
     /* 获取到指定岗位 */
     const normalPost = normalPosts.find(({ id }) => id === postId) as INormalPost
@@ -97,12 +98,13 @@ const normalWorkInfoSelector = createSelector(
 const apartmentWorkInfoSelector = createSelector(
   [
     hasPostId,
+    (state: IConnectState) => state.postInfo.postType,
     (state: IConnectState) => state.postInfo.apartmentId as string,
     (state: IConnectState) => state.postInfo.currentPostId,
     (state: IConnectState) => state.post.apartmentPosts,
   ],
-  (hasPostId, apartmentId, postId, apartmentPosts) => {
-    if (hasPostId === false || apartmentId === null) { return NULL_POSTINFO }
+  (hasPostId, postType, apartmentId, postId, apartmentPosts) => {
+    if (hasPostId === false || apartmentId === null || postType !== 'apartment') { return NULL_POSTINFO }
 
     /* 获取指定的公寓中心岗位 */
     const apartmentPost = apartmentPosts[apartmentId].find(({ id }) => id === postId) as ApartmentPostType

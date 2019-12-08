@@ -24,6 +24,8 @@ export interface IPostInfoModelType {
 		init: Effect
 	}
 	reducers: {
+		/* 改变选中的楼宇id */
+		changeApartmentId: Reducer<any>
 		/* 改变postInfo id, postType */
 		changePostInfo: Reducer<any>
 		/* 清除所有信息 */
@@ -66,6 +68,13 @@ const PostInfoModel: IPostInfoModelType = {
 		}
 	},
 	reducers: {
+		changeApartmentId(state: IPostInfoModelState, action) {
+			const { apartmentId } = action.payload
+			return {
+				...state,
+				apartmentId,
+			}
+		},
 		changePostInfo(state: IPostInfoModelState, action) {
 			const { postInfoId, postType } = action.payload
 			return {
