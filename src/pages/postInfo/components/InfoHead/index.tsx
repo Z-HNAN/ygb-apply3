@@ -14,7 +14,7 @@ export interface IProps {
    * contact 显示岗位负责人 
    */
   content: 'tags' | 'contact'
-  department: string
+  avator: string
   title: string
   tags?: string[]
   contactName?: string
@@ -26,7 +26,7 @@ const InfoHead: React.FC<IProps> = props => {
     className,
     content,
     tags = [],
-    department,
+    avator,
     title,
     contactName,
     contactPhone,
@@ -50,7 +50,6 @@ const InfoHead: React.FC<IProps> = props => {
     'tags': contentTags,
     'contact': contentContact,
   }
-  const avator = department.slice(0, 1)
 
   return (
     <div className={`${styles.root} ${className}`}>

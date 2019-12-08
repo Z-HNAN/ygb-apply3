@@ -15,6 +15,7 @@ import InfoWork from './components/InfoWork'
 import Apply from './components/Apply'
 
 import styles from './postInfo.less'
+import postInfo from '.'
 
 export interface IProps {
   loading: boolean
@@ -27,7 +28,7 @@ const tabs = [{title: '岗位详情', sub: 'info'}, {title: '时间安排', sub:
 const PostInfo: React.FC<IProps> = (props) => {
 
   const { loading, applyAble, postInfo } = props
-
+  
   const [applyVisible, setApplyVisible] = React.useState(false)
 
   if (loading === true) {
@@ -48,7 +49,7 @@ const PostInfo: React.FC<IProps> = (props) => {
       <InfoHead
         className={styles.head}
         content='tags'
-        department={postInfo.department}
+        avator={postInfo.avator}
         title={postInfo.title}
         tags={postInfo.tags}
       />
@@ -82,7 +83,6 @@ const PostInfo: React.FC<IProps> = (props) => {
         visible={applyVisible}
         animationType='slide-up'
         onClose={setApplyVisible.bind(null, false)}
-        afterClose={setApplyVisible.bind(null, false)}
       >
         <Apply />
       </Modal>

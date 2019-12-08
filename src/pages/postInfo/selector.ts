@@ -21,14 +21,18 @@ export interface IPostWork {
 
 export interface IPostInfo {
   title: string
+  postType: 'normal' | 'apartment' | ''
+  avator: string
   department: string
   tags: string[]
   content: string
   postWorks: IPostWork[]
 }
 
-const NULL_POSTINFO = {
+const NULL_POSTINFO: IPostInfo = {
   title: '',
+  postType: '',
+  avator: '',
   department: '',
   tags: [],
   content: '',
@@ -57,7 +61,7 @@ const normalWorkInfoSelector = createSelector(
     (state: IConnectState) => state.postInfo.currentPostId,
     (state: IConnectState) => state.post.normalPosts,
   ],
-  (hasPostId, postType, postId, normalPosts) => {
+  (hasPostId, postType, postId, normalPosts): IPostInfo => {
     if (hasPostId === false || postType !== 'normal' ) { return NULL_POSTINFO }
 
     /* 获取到指定岗位 */
@@ -82,13 +86,18 @@ const normalWorkInfoSelector = createSelector(
       works: works.sort((prev, next) => prev.startTime - next.startTime)
     } as IPostWork))
 
+    /* 使用用工部门首字做头像 */
+    const avator = normalPost.department.slice(0, 1),
+
     return {
       title: normalPost.title,
+      avator,
+      postType: 'normal',
       department: normalPost.department,
       tags: normalPost.tags,
       content: normalPost.content,
       postWorks,
-    } as IPostInfo
+    }
   }
 )
 
@@ -103,7 +112,7 @@ const apartmentWorkInfoSelector = createSelector(
     (state: IConnectState) => state.postInfo.currentPostId,
     (state: IConnectState) => state.post.apartmentPosts,
   ],
-  (hasPostId, postType, apartmentId, postId, apartmentPosts) => {
+  (hasPostId, postType, apartmentId, postId, apartmentPosts): IPostInfo => {
     if (hasPostId === false || apartmentId === null || postType !== 'apartment') { return NULL_POSTINFO }
 
     /* 获取指定的公寓中心岗位 */
@@ -118,13 +127,18 @@ const apartmentWorkInfoSelector = createSelector(
       works: apartmentPost.works
     }]
 
+    /* 使用楼号做头像,截取楼号数 */
+    const [avator] = apartmentPost.apartment.match(/\d+/) || ['']
+
     return {
       title: apartmentPost.title,
+      avator,
+      postType: 'apartment',
       department: apartmentPost.apartment,
       tags: apartmentPost.tags,
       content: apartmentPost.content,
       postWorks,
-    } as IPostInfo
+    }
   }
 )
 

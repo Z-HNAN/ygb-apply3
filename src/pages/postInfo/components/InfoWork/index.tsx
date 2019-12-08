@@ -6,7 +6,7 @@ import {
 import moment from 'moment'
 
 import { getWeekday } from '@/utils/momentExtends'
-import { IPostWork } from '../../selecter'
+import { IPostWork } from '../../selector'
 
 import WorkContent from './WorkContent'
 
@@ -41,11 +41,12 @@ const InfoWork: React.FC<IProps> = props => {
   const renderTabContent = (tab: ITbas) => {
     /**
      * 寻找合适的岗位信息，并加以渲染
+     * 1.修改月份显示 2.渲染日期下的岗位信息
      */
     const postWork = postWorks.find((postWork) => postWork.YYYYMMDD === tab.YYYYMMDD) as IPostWork
     setMonth(postWork.month)
     return (
-      <WorkContent works={postWork.works} />
+      <WorkContent type={postWork.workType} works={postWork.works} />
     )
   }
 
