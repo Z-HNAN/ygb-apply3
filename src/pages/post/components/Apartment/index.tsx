@@ -18,12 +18,14 @@ const Brief = Item.Brief
 
 interface OwnProps {
   apartmentPostList: ApartmentPostListType[],
+  apartmentId: string
   dispatch: Dispatch
 }
 
 const mapStateToProps = (state: IConnectState) => {
   return {
     apartmentPostList: apartmentPostListSelector(state),
+    apartmentId: state.postInfo.apartmentId as string,
   }
 }
 
@@ -31,11 +33,10 @@ const Apartment: React.FC<OwnProps> = props => {
   const {
     dispatch,
     apartmentPostList,
+    apartmentId,
   } = props
 
-  const [aptId, setAptId] = React.useState('18')
   const handleClickApartment = (id: string) => {
-    setAptId(id)
     dispatch({ type: 'post/initApartmentPost' , payload: { apartmentId: id }})
     dispatch({ type: 'postInfo/changeApartmentId', payload: { apartmentId: id }})
   }
@@ -50,14 +51,14 @@ const Apartment: React.FC<OwnProps> = props => {
 
   /* 挂载组建后，拉取所有的公寓中心岗位 */
   React.useEffect(() => {
-    dispatch({ type: 'post/initApartmentPost' , payload: { apartmentId: aptId }})
+    dispatch({ type: 'post/initApartmentPost', payload: { apartmentId: apartmentId }})
   }, [])
 
   return (
     <div className={styles.root}>
       <WhiteSpace />
       <div className={styles.map}>
-        <Map selectedId={aptId} onClick={handleClickApartment}/>
+        <Map selectedId={apartmentId} onClick={handleClickApartment}/>
       </div>
       <WhiteSpace />
       <div className={styles.info}>

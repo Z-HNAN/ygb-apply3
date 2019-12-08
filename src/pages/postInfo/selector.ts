@@ -87,7 +87,7 @@ const normalWorkInfoSelector = createSelector(
     } as IPostWork))
 
     /* 使用用工部门首字做头像 */
-    const avator = normalPost.department.slice(0, 1),
+    const avator = normalPost.department.slice(0, 1)
 
     return {
       title: normalPost.title,

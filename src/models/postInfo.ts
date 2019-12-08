@@ -38,7 +38,7 @@ export interface IPostInfoModelType {
 const INIT_STATE: IPostInfoModelState = {
 	currentPostId: null,
 	selectWorkId: null,
-	apartmentId: null,
+	apartmentId: '18',
 	postType: '',
 }
 
