@@ -8,6 +8,7 @@ import {
   WhiteSpace,
   List,
 } from 'antd-mobile'
+import Indicator from '@/components/Indicator'
 import Map from './components/Map'
 import { ApartmentPostListType ,apartmentPostListSelector } from './selector'
 
@@ -19,6 +20,7 @@ const Brief = Item.Brief
 interface OwnProps {
   apartmentPostList: ApartmentPostListType[],
   apartmentId: string
+  loading: boolean
   dispatch: Dispatch
 }
 
@@ -26,6 +28,7 @@ const mapStateToProps = (state: IConnectState) => {
   return {
     apartmentPostList: apartmentPostListSelector(state),
     apartmentId: state.postInfo.apartmentId as string,
+    loading: state.loading.models.post
   }
 }
 
@@ -34,6 +37,7 @@ const Apartment: React.FC<OwnProps> = props => {
     dispatch,
     apartmentPostList,
     apartmentId,
+    loading,
   } = props
 
   const handleClickApartment = (id: string) => {
@@ -56,6 +60,7 @@ const Apartment: React.FC<OwnProps> = props => {
 
   return (
     <div className={styles.root}>
+      <Indicator text='获取最新岗位信息...' show={loading} />
       <WhiteSpace />
       <div className={styles.map}>
         <Map selectedId={apartmentId} onClick={handleClickApartment}/>
