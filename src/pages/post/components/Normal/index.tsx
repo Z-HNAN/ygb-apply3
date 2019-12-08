@@ -9,6 +9,7 @@ import { INormalPost } from '@/models/post'
 
 import {
   WhiteSpace,
+  Progress,
 } from 'antd-mobile'
 
 import PostCard from '@/components/PostCard'
@@ -45,6 +46,7 @@ const Normal: React.FC<IProps> = props => {
   const postCardsDOM = normalPosts.map(normalPost => (
     <React.Fragment key={normalPost.id}>
       <WhiteSpace />
+      {/* <Progress percent={normalPost.nowCount / normalPost.totalCount * 100} position='normal' /> */}
       <PostCard {...normalPost} onClick={() => { handleClickPost(normalPost.id)}} />
     </React.Fragment>
   ))
