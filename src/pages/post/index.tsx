@@ -41,10 +41,10 @@ const Post: React.FC<IProps> = props => {
           tabs={tabs}
           renderTabBar={renderTabBar}
         >
-          <div className={styles.tabsContainer} key='department'>
+          <div className={styles.tabsContainer} key='normal'>
             <NormalComponent />
           </div>
-          <div className={styles.tabsContainer} key='normal'>
+          <div className={styles.tabsContainer} key='department'>
             <AparmentComponent />
           </div>
         </Tabs>
