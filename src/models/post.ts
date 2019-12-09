@@ -82,7 +82,12 @@ export interface ApartmentPostType {
 }
 
 export interface IPostModelState {
+  /* 普通岗位 */
   normalPosts: INormalPost[]
+  /* 普通岗位是否拉取完成 */
+  normalPostsFinished: boolean
+
+  /* 公寓中心岗位 */
   apartmentPosts: { [apartmentId: string]: ApartmentPostType[]}
 }
 
@@ -114,6 +119,7 @@ const PostModel: IPostModelType = {
   namespace: 'post',
   state: {
     normalPosts: [],
+    normalPostsFinished: false,
     apartmentPosts: {},
   },
   effects: {
@@ -130,11 +136,11 @@ const PostModel: IPostModelType = {
       const { append } = payload
       if (append === true) {
         const lastNormalPosts = yield select((state: IConnectState) => state.post.normalPosts)
-        const normalPosts = yield call(postService.fetchNormalPost, { start: lastNormalPosts.length })
-        yield put({ type: 'appendNormalPost', payload: { normalPosts } })
+        const { normalPosts, finished } = yield call(postService.fetchNormalPost, { start: lastNormalPosts.length })
+        yield put({ type: 'appendNormalPost', payload: { normalPosts, finished } })
       } else {
-        const normalPosts = yield call(postService.fetchNormalPost, { start: 1 })
-        yield put({ type: 'saveNormalPost', payload: { normalPosts } })
+        const { normalPosts, finished } = yield call(postService.fetchNormalPost, { start: 1 })
+        yield put({ type: 'saveNormalPost', payload: { normalPosts, finished } })
       }
     },
     *fetchNormalWork({ payload }, { call, put }) {
@@ -183,11 +189,12 @@ const PostModel: IPostModelType = {
       /**
        * 过滤一下id去重，很有可能服务端顺序不一致，造成重复拉取
        */
-      const { normalPosts: newNormalPost } = action.payload
+      const { normalPosts: newNormalPost, finished: normalPostsFinished } = action.payload
       const { normalPosts: oldNormalPost } = state
       const normalPosts = unionBy(newNormalPost, oldNormalPost, 'id')
       return {
         ...state,
+        normalPostsFinished,
         normalPosts,
       }
     },
@@ -202,9 +209,10 @@ const PostModel: IPostModelType = {
       }
     },
     saveNormalPost(state: IPostModelState, action) {
-      const { normalPosts } = action.payload
+      const { normalPosts, finished: normalPostsFinished } = action.payload
       return {
         ...state,
+        normalPostsFinished,
         normalPosts,
       }
     },

@@ -21,12 +21,14 @@ import styles from './index.less'
 export interface IProps {
   dispatch: Dispatch<AnyAction>
   normalPosts: INormalPost[]
+  finished: boolean
   loading: boolean
 }
 
 const mapStateToProps = (state: IConnectState) => {
   return {
     normalPosts: state.post.normalPosts,
+    finished: state.post.normalPostsFinished,
     loading: state.loading.models.post,
   }
 }
@@ -34,9 +36,11 @@ const mapStateToProps = (state: IConnectState) => {
 const Normal: React.FC<IProps> = props => {
   const { 
     dispatch,
+    finished,
     normalPosts,
     loading,
   } = props
+  
   const [appending, setAppending] = React.useState(false)
 
   const [dataSource, setDataSource] = React.useState(new ListView.DataSource({
@@ -84,6 +88,7 @@ const Normal: React.FC<IProps> = props => {
    * 滑动到了底部，准备触发append操作
    */
   const handleAppend = () => {
+    if (finished === true) { return }
     setAppending(true)
     dispatch({ type: 'post/fetchNormalPost', payload: { append: true} })
   }
@@ -92,19 +97,29 @@ const Normal: React.FC<IProps> = props => {
     return <div children={normalPost.id} style={{border: '1px solid red', height: '100px', width: '100vw'}} />
   }
 
+  /**
+   * 加载更多的文字提示
+   * - finished = true -> '没有更多的岗位了d(´ω｀*)', 取消事件
+   * 
+   * - finished = false ->
+   *   - appending = true '加载中...'
+   *   - appending = false '加载更多'
+   */
+  let appendingText = ''
+  appendingText = appending === true ? '奋力加载中...' : '加载更多'
+  appendingText = finished === true ? '没有更多的岗位了d(´ω｀*)' : appendingText
+
   return (
     <div className={styles.root}>
 
         <ListView
           className={styles.append}
           dataSource={dataSource}
-          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-            {appending ? '加载中...' : '加载更多'}
-          </div>)}
+          renderFooter={() => (<div className={styles.listViewFooter} children={appendingText} />)}
+          pageSize={5}
           renderRow={rowRender}
           onEndReached={handleAppend}
           pullToRefresh={
-            /* tslint-disable-next-line */
             <PullToRefresh
               className={styles.refresh}
               damping={60}

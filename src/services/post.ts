@@ -47,8 +47,16 @@ export interface IAPINormalPost {
 /**
  * 获取所有的普通岗位信息
  */
-export async function fetchNormalPost(): Promise<any> {
-  const response = await request(`normalPost`)
+export async function fetchNormalPost({ start = 1 }: {start: number}): Promise<any> {
+  
+  const response = await request(`normalPost`, {
+    params: {
+      start,
+    }
+  })
+
+  /* 是否拉取完毕，如果本次拉取的数据长度为0，则代表拉取完成 */
+  const finished = response.length === 0
 
   /* 过滤数据 */
   const normalPosts: INormalPost[] = response.map((normalPost: IAPINormalPost) => {
@@ -74,7 +82,7 @@ export async function fetchNormalPost(): Promise<any> {
     }
   })
 
-  return normalPosts
+  return { normalPosts, finished }
 }
 
 /**
