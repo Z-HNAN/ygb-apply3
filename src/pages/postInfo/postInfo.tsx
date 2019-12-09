@@ -1,6 +1,4 @@
 import React from 'react'
-import { StickyContainer, Sticky } from 'react-sticky'
-
 import {
   Button,
   Tabs,
@@ -15,7 +13,6 @@ import InfoWork from './components/InfoWork'
 import Apply from './components/Apply'
 
 import styles from './postInfo.less'
-import postInfo from '.'
 
 export interface IProps {
   loading: boolean
@@ -37,13 +34,6 @@ const PostInfo: React.FC<IProps> = (props) => {
     Toast.hide()
   }
 
-  /* 渲染岗位详情的吊顶 */
-  const renderTabBar = (props: any) => (
-    <Sticky>
-      {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
-    </Sticky>
-  )
-
   return (
     <div className={styles.root}>
       <InfoHead
@@ -54,20 +44,18 @@ const PostInfo: React.FC<IProps> = (props) => {
         tags={postInfo.tags}
       />
       <div className={styles.body}>
-        <StickyContainer>
-          <Tabs tabs={tabs} renderTabBar={renderTabBar}>
-            <div className={styles.tabContainerInfo} key='info'>
-              <h2 className={styles.tabContainerTitle}>岗位详情</h2>
-              <p
-                className={styles.tabContainerParagraph}
-                dangerouslySetInnerHTML={{__html: postInfo.content}}
-              />
-            </div>
-            <div className={styles.tabContainerTime} key='time'>
-              <InfoWork postWorks={postInfo.postWorks} />
-            </div>
-          </Tabs>
-        </StickyContainer>
+        <Tabs tabs={tabs}>
+          <div className={styles.tabContainerInfo} key='info'>
+            <h2 className={styles.tabContainerTitle}>岗位详情</h2>
+            <p
+              className={styles.tabContainerParagraph}
+              dangerouslySetInnerHTML={{__html: postInfo.content}}
+            />
+          </div>
+          <div className={styles.tabContainerTime} key='time'>
+            <InfoWork postWorks={postInfo.postWorks} />
+          </div>
+        </Tabs>
       </div>
       <div className={styles.foot}>
         <Button
