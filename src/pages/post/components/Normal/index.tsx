@@ -93,9 +93,13 @@ const Normal: React.FC<IProps> = props => {
     dispatch({ type: 'post/fetchNormalPost', payload: { append: true} })
   }
 
-  const rowRender = (normalPost: INormalPost) => {
-    return <div children={normalPost.id} style={{border: '1px solid red', height: '100px', width: '100vw'}} />
-  }
+  const rowRender = (normalPost: INormalPost) => (
+    <React.Fragment key={normalPost.id}>
+      <WhiteSpace />
+      {/* <Progress percent={normalPost.nowCount / normalPost.totalCount * 100} position='normal' /> */}
+      <PostCard {...normalPost} onClick={() => { handleClickPost(normalPost.id) }} />
+    </React.Fragment>
+  )
 
   /**
    * 加载更多的文字提示
@@ -111,10 +115,10 @@ const Normal: React.FC<IProps> = props => {
 
   return (
     <div className={styles.root}>
-
         <ListView
           className={styles.append}
           dataSource={dataSource}
+          renderBodyComponent={() => (<div className={styles.refreshBody} />)}
           renderFooter={() => (<div className={styles.listViewFooter} children={appendingText} />)}
           pageSize={5}
           renderRow={rowRender}
