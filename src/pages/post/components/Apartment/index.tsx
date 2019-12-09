@@ -7,6 +7,7 @@ import { Dispatch, AnyAction } from 'redux'
 import {
   WhiteSpace,
   List,
+  PullToRefresh,
 } from 'antd-mobile'
 import Indicator from '@/components/Indicator'
 import Map from './components/Map'
@@ -46,7 +47,7 @@ const Apartment: React.FC<OwnProps> = props => {
   }
 
   /**
-   * 处理点击岗位，并跳转去岗位详情
+   * 处理点击岗位，并跳转去岗位详情`
    */
   const handleClickPost = (id: string) => {
     dispatch({ type: 'postInfo/changePostInfo', payload: { postInfoId: id, postType: 'apartment' }})
@@ -58,30 +59,42 @@ const Apartment: React.FC<OwnProps> = props => {
     dispatch({ type: 'post/initApartmentPost', payload: { apartmentId: apartmentId }})
   }, [])
 
+  /* 重新获取该岗位 */
+  const handleRefresh = () => {
+    dispatch({ type: 'post/fetchApartmentPost', payload: { apartmentId } })
+  }
+
   return (
     <div className={styles.root}>
-      <Indicator text='获取最新岗位信息...' show={loading} />
       <WhiteSpace />
       <div className={styles.map}>
         <Map selectedId={apartmentId} onClick={handleClickApartment}/>
       </div>
       <WhiteSpace />
-      <div className={styles.info}>
-        <List>
-          {
-            apartmentPostList.map(({ id, title, nowCount, totalCount }) => (
-              <Item
-                key={id}
-                arrow="horizontal"
-                multipleLine
-                onClick={handleClickPost.bind(null, id)}
-              >
-                {title}
-                <Brief>{`当前报名 ${nowCount}/${totalCount} 人`}</Brief>
-              </Item>
-            ))}
-        </List>
-      </div>
+        <PullToRefresh
+          className={styles.refresh}
+          damping={60}
+          direction='down'
+          refreshing={loading}
+          onRefresh={handleRefresh}
+        >
+          <div className={styles.info}>
+          <List>
+            {
+              apartmentPostList.map(({ id, title, nowCount, totalCount }) => (
+                <Item
+                  key={id}
+                  arrow="horizontal"
+                  multipleLine
+                  onClick={handleClickPost.bind(null, id)}
+                >
+                  {title}
+                  <Brief>{`当前报名 ${nowCount}/${totalCount} 人`}</Brief>
+                </Item>
+              ))}
+          </List>
+        </div>
+        </PullToRefresh>
     </div>
   )
 }
