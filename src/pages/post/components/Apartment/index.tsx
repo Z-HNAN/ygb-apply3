@@ -54,11 +54,6 @@ const Apartment: React.FC<OwnProps> = props => {
     router.push('/postInfo')
   }
 
-  /* 挂载组建后，拉取所有的公寓中心岗位 */
-  React.useEffect(() => {
-    dispatch({ type: 'post/initApartmentPost', payload: { apartmentId: apartmentId }})
-  }, [])
-
   /* 重新获取该岗位 */
   const handleRefresh = () => {
     dispatch({ type: 'post/fetchApartmentPost', payload: { apartmentId } })

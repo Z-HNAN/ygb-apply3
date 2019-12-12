@@ -3,12 +3,11 @@ import { Subscription, Effect } from 'dva'
 import { IConnectState } from '@/models/connect.d'
 import router from 'umi/router'
 
-
 export interface IPostInfoModelState {
 	// 当前的postId
 	currentPostId: string | null
 	// 当前的apartmentId，仅针对于apartment中，该楼楼号
-	apartmentId: string | null
+	apartmentId: string
 	// 当前选中的工作时间段
 	selectWorkId: string | null
 	// 当前的工作类型
@@ -32,6 +31,9 @@ export interface IPostInfoModelType {
 		clear: Reducer<any>
 		/* 改变选中的workId */
 		selectWork: Reducer<any>
+	},
+	subscriptions: {
+		init: Subscription
 	}
 }
 
@@ -51,6 +53,7 @@ const PostInfoModel: IPostInfoModelType = {
 			const currentPostId = yield select(
 				(state: IConnectState) => state.postInfo.currentPostId
 			)
+			/* 跳转回岗位列表，并关闭Toast */
 			if (currentPostId === null) {
 				router.push('/post')
 				return
@@ -94,6 +97,19 @@ const PostInfoModel: IPostInfoModelType = {
 			}
 		},
 	},
+	subscriptions: {
+		/**
+			* 初始化postInfo的数据
+			* 包括数据的拉取，和检查数据是否正常等
+			*/
+		init({ dispatch, history }) {
+			return history.listen(({ pathname }) => {
+				if (pathname === '/postInfo') {
+					dispatch({ type: 'init', payload: {} })
+				}
+			})
+		}
+	}
 }
 
 export default PostInfoModel

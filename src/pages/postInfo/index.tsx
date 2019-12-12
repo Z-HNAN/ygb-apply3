@@ -35,13 +35,6 @@ const mapStateToProps = (state: IConnectState) => {
 }
 
 class PostInfo extends React.PureComponent<IProps, IState> {
-  componentDidMount () {
-    /**
-     * 初始化postInfo的数据
-     * 包括数据的拉取，和检查数据是否正常等
-     */
-    this.props.dispatch({ type: 'postInfo/init' })
-  }
   componentWillUnmount () {
     /* 销毁组件，清理数据 */
     this.props.dispatch({ type: 'postInfo/clear'})

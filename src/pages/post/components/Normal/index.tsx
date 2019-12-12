@@ -9,7 +9,6 @@ import { INormalPost } from '@/models/post'
 
 import {
   WhiteSpace,
-  Progress,
   PullToRefresh,
   ListView,
 } from 'antd-mobile'
@@ -63,19 +62,6 @@ const Normal: React.FC<IProps> = props => {
     dispatch({ type: 'postInfo/changePostInfo', payload: { postInfoId: id, postType: 'normal' }})
     router.push('/postInfo')
   }
-
-  React.useEffect(() => {
-    // 挂载组建后,拉取所有normal
-    dispatch({ type: 'post/initNormalPost' })
-  }, [])
-
-  const postCardsDOM = normalPosts.map(normalPost => (
-    <React.Fragment key={normalPost.id}>
-      <WhiteSpace />
-      {/* <Progress percent={normalPost.nowCount / normalPost.totalCount * 100} position='normal' /> */}
-      <PostCard {...normalPost} onClick={() => { handleClickPost(normalPost.id)}} />
-    </React.Fragment>
-  ))
 
   /**
    * 滑动到了顶部，准备触发刷新操作

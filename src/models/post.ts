@@ -112,6 +112,10 @@ export interface IPostModelType {
     saveApartmentPost: Reducer<any>
     saveNormalPost: Reducer<any>
     saveNormalWorks: Reducer<any>
+  },
+  subscriptions: {
+    /* 初始化 */
+    init: Subscription
   }
 }
 
@@ -235,6 +239,16 @@ const PostModel: IPostModelType = {
       }
     },
   },
+  subscriptions: {
+    /* 页面初始化，加载数据,加载normalPost的数据 */
+    init({ dispatch, history }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === '/post') {
+          dispatch({ type: 'initNormalPost', payload: {} })
+        }
+      })
+    }
+  }
 }
 
 export default PostModel

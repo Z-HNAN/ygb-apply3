@@ -4,7 +4,6 @@
 
 import React, { PureComponent } from 'react'
 import MenuBar from './MenuBar'
-import withRouter from 'umi/withRouter'
 import { connect } from 'dva'
 
 import { IConnectState } from '@/models/connect.d'
@@ -13,6 +12,11 @@ import styles from './BasicLayout.less'
 
 // 需要路由跳转的页面
 const BarRoutes= ['/post', '/schedule', '/me']
+
+
+const mapStateToProps = (state: IConnectState) => {
+  return {}
+}
 
 const BasicLayout: React.FC<any> = props => {
   const { children, location } = props
@@ -24,13 +28,9 @@ const BasicLayout: React.FC<any> = props => {
 
   return (
     <div className={styles.root}>
-      <MenuBar pathname={location.pathname} >{children}</MenuBar>
+      <MenuBar pathname={location.pathname}>{children}</MenuBar>
     </div>
-  );
+  )
 }
 
-const mapStateToProps = (state: IConnectState) => {
-  return {}
-}
-
-export default React.memo(withRouter(connect(mapStateToProps)(BasicLayout)))
+export default connect(mapStateToProps)(React.memo(BasicLayout))
