@@ -9,6 +9,7 @@ import {
   List,
   PullToRefresh,
 } from 'antd-mobile'
+import RefreshSafeFooter from '@/components/RefreshSafeFooter'
 import Indicator from '@/components/Indicator'
 import Map from './components/Map'
 import { ApartmentPostListType ,apartmentPostListSelector } from './selector'
@@ -88,7 +89,8 @@ const Apartment: React.FC<OwnProps> = props => {
                 </Item>
               ))}
           </List>
-        </div>
+          </div>
+          <RefreshSafeFooter />
         </PullToRefresh>
     </div>
   )

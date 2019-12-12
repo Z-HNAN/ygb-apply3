@@ -13,6 +13,7 @@ import {
   ListView,
 } from 'antd-mobile'
 
+import RefreshSafeFooter from '@/components/RefreshSafeFooter'
 import PostCard from '@/components/PostCard'
 
 import styles from './index.less'
@@ -116,6 +117,7 @@ const Normal: React.FC<IProps> = props => {
               direction='down'
               refreshing={loading}
               onRefresh={handleRefresh}
+              children={<RefreshSafeFooter />}
             />
           }
           onEndReachedThreshold={10}
