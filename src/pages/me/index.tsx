@@ -25,4 +25,4 @@ const Me: React.FC<OwnProps> = props => {
   )
 }
 
-export default connect(mapStateToProps)(Me)
+export default connect(mapStateToProps)(React.memo(Me))

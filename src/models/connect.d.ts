@@ -1,27 +1,31 @@
 import { AnyAction } from 'redux';
 
-import { IUsersModelState } from './users'
 import { IPostModelState } from './post'
 import { IPostInfoModelState } from './postInfo'
+import { ScheduleModelState } from './schedule'
 
-export { IUsersModelState, IPostModelState, IPostInfoModelState }
+export {
+  IPostModelState,
+  IPostInfoModelState,
+  ScheduleModelState,
+}
 
 export interface Loading {
   global: boolean;
   effects: { [key: string]: boolean | undefined };
   models: {
     global?: boolean;
-    users?: boolean;
     post?: boolean;
     postInfo?: boolean;
+    schedule?: boolean;
   };
 }
 
 export interface IConnectState {
   loading: Loading
-  users: IUsersModelState
   post: IPostModelState
   postInfo: IPostInfoModelState
+  schedule: ScheduleModelState
 }
 
 // export interface Route  {
