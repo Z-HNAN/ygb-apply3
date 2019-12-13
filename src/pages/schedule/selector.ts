@@ -94,7 +94,7 @@ export const allScheduleSelector = createSelector(
 )
 
 /**
- * 已报名计划安排（未开始，< startOf ）
+ * 已报名计划安排（未开始，startOfToday < 工作时间）
  * normal中小于今天的日期
  */
 export const waitingScheduleSelector = createSelector(
@@ -107,7 +107,7 @@ export const waitingScheduleSelector = createSelector(
     /* 过滤normal计划 */
     const normalSchedules = schedules
       .filter(({ postType }) => postType === 'normal')
-      .filter(({ startTime }) => (startTime as number) < startTimestamp)
+      .filter(({ startTime }) => startTimestamp < (startTime as number))
     return normalSchedules.map(({ id, time, title, department }) => ({
       id,
       time,
@@ -152,7 +152,7 @@ export const workingScheduleSelector = createSelector(
 
 
 /**
- * 已结束计划安排（已结束，endOf < ）
+ * 已结束计划安排（已结束，工作时间 < endOfToday ）
  * normal中小于今天的日期
  */
 export const finishScheduleSelector = createSelector(
@@ -165,7 +165,7 @@ export const finishScheduleSelector = createSelector(
     /* 过滤normal计划 */
     const normalSchedules = schedules
       .filter(({ postType }) => postType === 'normal')
-      .filter(({ startTime }) => endTimestamp < (startTime as number))
+      .filter(({ startTime }) => (startTime as number) < endTimestamp)
 
     return normalSchedules.map(({ id, time, title, department }) => ({
       id,
