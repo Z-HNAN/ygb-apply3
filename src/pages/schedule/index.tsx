@@ -73,6 +73,14 @@ const Schedule: React.FC<OwnProps> = props => {
   }
 
   /**
+   * 查看岗位详情
+   */
+  const handleScheduleInfo = (id: string) => {
+    dispatch({ type: 'schedule/changeScheduleId', payload: { scheduleId: id } })
+    router.push('/scheduleInfo')
+  }
+
+  /**
    * 渲染计划安排，如果长度为0，展示没有更多记录
    */
   const renderSchedules = (schedules: ScheduleCardType[]) => {
@@ -84,14 +92,14 @@ const Schedule: React.FC<OwnProps> = props => {
       contentDOM = schedules.map((scheduleCard) => (
         <React.Fragment key={scheduleCard.id}>
           <WhiteSpace />
-          <ScheduleCard {...scheduleCard} />
+          <ScheduleCard {...scheduleCard} onClick={handleScheduleInfo.bind(null, scheduleCard.id)}/>
         </React.Fragment>
       ))
     }
 
     return (
       <PullToRefresh
-        className={styles.refresh1}
+        className={styles.refresh}
         damping={60}
         direction='down'
         refreshing={loading}

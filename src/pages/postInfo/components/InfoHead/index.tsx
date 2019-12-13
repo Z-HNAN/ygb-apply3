@@ -18,7 +18,7 @@ export interface IProps {
   title: string
   tags?: string[]
   contactName?: string
-  contactPhone?: number
+  contactPhone?: string
 }
 
 const InfoHead: React.FC<IProps> = props => {

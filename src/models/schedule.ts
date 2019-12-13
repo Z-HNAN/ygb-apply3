@@ -1,6 +1,7 @@
 import { Reducer } from 'redux'
 import { Subscription, Effect } from 'dva'
 import { IConnectState } from './connect.d'
+import router from 'umi/router'
 
 import * as scheduleService from '@/services/schedule'
 
@@ -28,7 +29,8 @@ export interface ApplyType {
 }
 
 export interface ScheduleModelState {
-  applyList: ApplyType[] 
+  applyList: ApplyType[]
+  scheduleId: string | null
 }
 
 export interface ScheduleModelType {
@@ -37,16 +39,22 @@ export interface ScheduleModelType {
   reducers: {
     /* 保存岗位安排表信息 */
     saveApplyList: Reducer<any>
+    /* 改变当前查看的计划Id */
+    changeScheduleId: Reducer<any>
   }
   effects: {
     /* 初始化所有用户 */
     initApplyList: Effect,
+    /* 检查计划详情数据是否正确 */
+    initScheduleInfo: Effect,
     /* 拉取岗位安排计划 */
     fetchApplyList: Effect,
   }
   subscriptions: {
     /* 页面初始化，加载数据 */
     init: Subscription,
+    /* 检查计划详情页是否正常 */
+    initScheduleInfo: Subscription,
   }
 }
 
@@ -54,15 +62,22 @@ const ScheduleModel: ScheduleModelType = {
   namespace: 'schedule',
   state: {
     applyList: [],
+    scheduleId: null,
   },
   reducers: {
     saveApplyList(state: IConnectState, action) {
       const { applyList } = action.payload
-      
       return {
         ...state,
         applyList,
       } 
+    },
+    changeScheduleId(state: IConnectState, action) {
+      const { scheduleId } = action.payload
+      return {
+        ...state,
+        scheduleId,
+      }
     }
   },
   effects: {
@@ -75,6 +90,17 @@ const ScheduleModel: ScheduleModelType = {
       )
       if (applyList.length <= 0) {
         yield put({ type: 'fetchApplyList', payload: {} })
+      }
+    },
+    *initScheduleInfo(_, { put, select }) {
+      /**
+       * 检查是否存在scheduleId，否则跳回schedule
+       */
+      const scheduleId = yield select(
+        (state: IConnectState) => state.schedule.scheduleId
+      )
+      if (scheduleId === null) {
+        router.push('/schedule')
       }
     },
     *fetchApplyList(_, { call, put, select }) {
@@ -91,7 +117,15 @@ const ScheduleModel: ScheduleModelType = {
           dispatch({ type: 'initApplyList', payload: {} })
         }
       })
-    }
+    },
+    /* 检查计划详情页是否正常 */
+    initScheduleInfo({ dispatch, history }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === '/scheduleInfo') {
+          dispatch({ type: 'initScheduleInfo', payload: {} })
+        }
+      }) 
+    },
   }
 }
 
