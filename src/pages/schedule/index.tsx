@@ -4,7 +4,6 @@
 
 import React from 'react'
 import { Tabs, WhiteSpace, PullToRefresh } from 'antd-mobile'
-import { StickyContainer, Sticky } from 'react-sticky'
 import { connect } from 'dva';
 import router from 'umi/router'
 import { IConnectState } from '@/models/connect.d'
@@ -39,13 +38,6 @@ const mapStateToProps = (state: IConnectState) => {
     workingSchedule: workingScheduleSelector(state),
     finishSchedule: finishScheduleSelector(state),
   }
-}
-
-function renderTabBar(props: any) {
-  return (
-  <Sticky>
-    {({ style }) => <div style={{ ...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
-  </Sticky>)
 }
 
 const tabs = [
@@ -112,17 +104,14 @@ const Schedule: React.FC<OwnProps> = props => {
   }
 
   return (
-    <StickyContainer>
-      <Tabs
-        tabs={tabs}
-        renderTabBar={renderTabBar}
-      >
-        <div key='all' children={renderSchedules(allSchedule)} />
-        <div key='waiting' children={renderSchedules(waitingSchedule)} />
-        <div key='working' children={renderSchedules(workingSchedule)} />
-        <div key='finish' children={renderSchedules(finishSchedule)} />
-      </Tabs>
-    </StickyContainer>
+    <Tabs
+      tabs={tabs}
+    >
+      <div key='all' children={renderSchedules(allSchedule)} />
+      <div key='waiting' children={renderSchedules(waitingSchedule)} />
+      <div key='working' children={renderSchedules(workingSchedule)} />
+      <div key='finish' children={renderSchedules(finishSchedule)} />
+    </Tabs>
   )
 }
 

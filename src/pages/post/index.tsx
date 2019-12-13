@@ -6,7 +6,6 @@ import React from 'react'
 import { connect } from 'dva'
 import { IConnectState } from '@/models/connect.d'
 import { Dispatch, AnyAction } from 'redux'
-import { StickyContainer, Sticky } from 'react-sticky'
 import {
   Button,
   Tabs,
@@ -53,31 +52,18 @@ const Post: React.FC<IProps> = props => {
     }
   }
 
-  function renderTabBar(props: any) {
-    return (
-      <Sticky>
-        {({ style }) => <div style={{...style, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
-      </Sticky>
-    )
-  }
-
   return (
-    <div>
-      <StickyContainer>
-        <Tabs
-          tabs={tabs}
-          renderTabBar={renderTabBar}
-          onChange={handleChangeTab}
-        >
-          <div className={styles.tabsContainer} key='normal'>
-            <NormalComponent />
-          </div>
-          <div className={styles.tabsContainer} key='apartment'>
-            <AparmentComponent />
-          </div>
-        </Tabs>
-      </StickyContainer>
-    </div>
+      <Tabs
+        tabs={tabs}
+        onChange={handleChangeTab}
+      >
+        <div className={styles.tabsContainer} key='normal'>
+          <NormalComponent />
+        </div>
+        <div className={styles.tabsContainer} key='apartment'>
+          <AparmentComponent />
+        </div>
+      </Tabs>
   )
 }
 
