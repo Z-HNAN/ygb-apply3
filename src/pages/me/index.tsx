@@ -6,6 +6,7 @@ import { connect } from 'dva';
 import router from 'umi/router'
 import { IConnectState } from '@/models/connect.d'
 import { Dispatch, AnyAction } from 'redux';
+import { StudentType } from '@/models/global'
 
 import {
   WhiteSpace,
@@ -17,16 +18,17 @@ import styles from './index.less'
 
 export interface OwnProps {
   dispatch: Dispatch<AnyAction>
+  student: StudentType
 }
 
 const mapStateToProps = (state: IConnectState) => {
   return {
-
+    student: state.global.student
   }
 }
 
 const Me: React.FC<OwnProps> = props => {
-  const {} = props
+  const { student } = props
 
   return (
     <div className={styles.root}>
@@ -35,9 +37,9 @@ const Me: React.FC<OwnProps> = props => {
         <div className={styles.photoImage} />
       </div>
       <div className={styles.info}>
-        <div className={styles.studentName}>白勇</div>
-        <div className={styles.studentID}>学号：17051636</div>
-        <div className={styles.studentCollege}>学院：巴巴爸爸吧撒的撒多大杀四方</div>
+        <div className={styles.studentName}>{student.studentName}</div>
+        <div className={styles.studentID}>学号：{student.studentPhone}</div>
+        <div className={styles.studentCollege}>学院：{student.studentCollege}</div>
       </div>
       <WhiteSpace />
       <List>

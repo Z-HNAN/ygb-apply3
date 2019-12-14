@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux';
 
+import { GlobalModelStateType } from './global'
 import { IPostModelState } from './post'
 import { IPostInfoModelState } from './postInfo'
 import { ScheduleModelState } from './schedule'
@@ -8,6 +9,7 @@ export {
   IPostModelState,
   IPostInfoModelState,
   ScheduleModelState,
+  GlobalModelStateType,
 }
 
 export interface Loading {
@@ -23,6 +25,7 @@ export interface Loading {
 
 export interface IConnectState {
   loading: Loading
+  global: GlobalModelStateType
   post: IPostModelState
   postInfo: IPostInfoModelState
   schedule: ScheduleModelState
