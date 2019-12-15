@@ -26,6 +26,7 @@ export interface IState {}
 
 const mapStateToProps = (state: IConnectState) => {
   return {
+    /* 正在拉取岗位详情 */
     loading: (state.loading.models.post) as boolean,
     /* 岗位详情 */
     postInfo: postInfoSelector(state),
@@ -40,8 +41,18 @@ class PostInfo extends React.PureComponent<IProps, IState> {
     this.props.dispatch({ type: 'postInfo/clear'})
   }
 
+
+  // 处理报名
+  handleApply = ({ workId, phone, rememberPhone }: { workId: string, phone: string, rememberPhone: boolean }) => {
+    Toast.loading('报名中...', 0)
+    this.props.dispatch({
+      type: 'postInfo/apply',
+      payload: { workId, phone, rememberPhone },
+    })
+  }
+
   render() {
-    return (<Component {...this.props} />)
+    return (<Component onApply={this.handleApply} {...this.props} />)
   }
 }
 

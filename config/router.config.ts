@@ -12,6 +12,7 @@ const routes: IRoute[] = [
       { path: '/postInfo', component: './postInfo', title: '岗位详情' },
       { path: '/schedule', component: './schedule', title: '计划' },
       { path: '/scheduleInfo', component: './scheduleInfo', title: '岗位详情' },
+      { path: '/applyFeedback', component: './applyFeedback', title: '报名结果' },
       { path: '/me', component: './me', title: '我的' },
       { component: '404', title: '页面走丢了...' },
     ],

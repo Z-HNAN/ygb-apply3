@@ -15,6 +15,7 @@ import Apply from './components/Apply'
 import styles from './postInfo.less'
 
 export interface IProps {
+  onApply: ({ workId, phone, rememberPhone }: {workId: string, phone: string, rememberPhone: boolean}) => void
   loading: boolean
   applyAble: boolean
   postInfo: IPostInfo
@@ -24,7 +25,7 @@ const tabs = [{title: '岗位详情', sub: 'info'}, {title: '时间安排', sub:
 
 const PostInfo: React.FC<IProps> = (props) => {
 
-  const { loading, applyAble, postInfo } = props
+  const { loading, applyAble, postInfo, onApply } = props
   
   const [applyVisible, setApplyVisible] = React.useState(false)
 
@@ -73,7 +74,7 @@ const PostInfo: React.FC<IProps> = (props) => {
         animationType='slide-up'
         onClose={setApplyVisible.bind(null, false)}
       >
-        <Apply />
+        <Apply onApply={onApply}/>
       </Modal>
     </div>
   )

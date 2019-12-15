@@ -7,6 +7,7 @@ import {
   Button,
   Switch,
   Modal,
+  Toast,
 } from 'antd-mobile'
 
 import Icon from '@/components/Icon'
@@ -19,6 +20,8 @@ import { StudentType } from '@/models/global'
 import styles from './index.less'
 
 export interface OwnProps {
+  dispatch: Dispatch<AnyAction>
+  onApply: ({ workId, phone, rememberPhone }: { workId: string, phone: string, rememberPhone: boolean }) => void
   student: StudentType
   workId: string | null
 }
@@ -48,7 +51,7 @@ const mapStateToProps = (state: IConnectState) => {
 }
 
 const Apply: React.FC<OwnProps> = props => {
-  const { student, workId } = props
+  const { onApply, student, workId } = props
 
   /**
    * 手机号相关
@@ -81,7 +84,7 @@ const Apply: React.FC<OwnProps> = props => {
     }
 
     // 报名
-    
+    onApply({ workId, phone, rememberPhone})
   }
 
   return (
