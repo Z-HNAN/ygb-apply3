@@ -50,7 +50,8 @@
     "tslint-react": "^3.6.0",
     "umi": "^2.12.5",
     "umi-plugin-react": "^1.8.0",
-    "umi-types": "^0.3.0"
+    "umi-types": "^0.3.0",
+    "typescript-eslint": "2.11.0"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
