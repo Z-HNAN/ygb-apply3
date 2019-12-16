@@ -29,7 +29,7 @@ const ApplyFeedback: React.FC<OwnProps> = props => {
    */
   const handleApplySuccessAction = () => {
     // 返回计划安排
-    router.push('/schedule')
+    router.replace('/schedule')
   }
 
   /**
@@ -37,7 +37,7 @@ const ApplyFeedback: React.FC<OwnProps> = props => {
    */
   const handleApplyErrorAction = () => {
     // 返回岗位大厅
-    router.push('/post')
+    router.replace('/post')
   }
 
   /**

@@ -100,7 +100,7 @@ const ScheduleModel: ScheduleModelType = {
         (state: IConnectState) => state.schedule.scheduleId
       )
       if (scheduleId === null) {
-        router.push('/schedule')
+        router.replace('/schedule')
       }
     },
     *fetchApplyList(_, { call, put, select }) {

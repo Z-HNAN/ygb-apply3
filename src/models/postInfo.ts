@@ -75,7 +75,7 @@ const PostInfoModel: IPostInfoModelType = {
 			)
 			/* 跳转回岗位列表，并关闭Toast */
 			if (currentPostId === null) {
-				router.push('/post')
+				router.replace('/post')
 				return
 			}
 
