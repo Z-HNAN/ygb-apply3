@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-12-24 23:26:50
  */
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, ReactElement } from 'react';
 import { TabBar } from 'antd-mobile';
 import Router from 'umi/router';
 import Icon from '@/components/Icon'
@@ -43,6 +43,7 @@ const tabBarData: ITabBar[] = [
 
 interface IProps {
   pathname: string
+  children: ReactElement
   [porpName: string]: any
 }
 
@@ -62,7 +63,7 @@ const MenuBar: React.FC<IProps> = props => {
           onPress={() => Router.push(`${link}`)}
         >
           {/* 匹配到的children路由进行渲染 */}
-          {children}
+          {children.props.location.pathname === link && children}
         </TabBar.Item>
       ))}
     </TabBar>
