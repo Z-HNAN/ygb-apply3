@@ -7,7 +7,10 @@ import plugins from './plugin.config'
 // ref: https://umijs.org/config/
 const config: IConfig =  {
   treeShaking: true,
+
   routes,
+  history: 'hash',
+
   plugins,
 
   /* less配置 */
