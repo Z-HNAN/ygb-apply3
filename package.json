@@ -1,6 +1,6 @@
 {
   "name": "ygb-apply3.0",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "ygb-apply mock demo project",
   "scripts": {
     "start": "cross-env UMI_ENV=dev umi dev",
